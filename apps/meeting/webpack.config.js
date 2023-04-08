@@ -75,7 +75,7 @@ module.exports = {
       overlay: false,
     },
     hot: false,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 9000,
     https: true,
     open: true,

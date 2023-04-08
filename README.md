@@ -1,3 +1,42 @@
+
+## DOCS FOR RUN POC  - CHIME 
+
+1. clone repo and go to apps -> meeting
+
+2. run
+```
+npm install
+```
+3. in File *server.js* change the aws credentials [line 19]
+
+4. run 
+
+```
+npm start 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Amazon Chime SDK Samples
 
 The Amazon Chime SDK is a set of real-time communications components that developers can use to quickly add messaging, audio, video, and screen sharing capabilities to their web or mobile applications. Developers can leverage the same communication infrastructure and services that power Amazon Chime, an online meetings service from AWS, and deliver engaging experiences in their applications.

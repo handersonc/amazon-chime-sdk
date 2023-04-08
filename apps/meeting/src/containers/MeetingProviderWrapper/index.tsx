@@ -20,7 +20,7 @@ import {
 import routes from '../../constants/routes';
 import { NavigationProvider } from '../../providers/NavigationProvider';
 import NoMeetingRedirect from '../NoMeetingRedirect';
-import { Meeting, Home, DeviceSetup } from '../../views';
+import { Meeting, Home, DeviceSetup, MeetingList } from '../../views';
 import MeetingEventObserver from '../MeetingEventObserver';
 import { useAppState } from '../../providers/AppStateProvider';
 import { VideoFiltersCpuUtilization } from '../../types';
@@ -57,6 +57,7 @@ const MeetingProviderWrapper: React.FC = () => {
         <NavigationProvider>
           <Switch>
             <Route exact path={routes.HOME} component={Home} />
+            <Route exact path={routes.DASHBOARD} component={MeetingList} />
             <Route path={routes.DEVICE}>
               <NoMeetingRedirect>
                 <DeviceSetup />

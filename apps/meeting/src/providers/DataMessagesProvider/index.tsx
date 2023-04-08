@@ -1,16 +1,32 @@
-import { useAudioVideo, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import {
+  useAudioVideo,
+  useMeetingManager,
+} from 'amazon-chime-sdk-component-library-react';
 import { DataMessage } from 'amazon-chime-sdk-js';
-import React, { useEffect, useReducer, createContext, useContext, FC, useCallback } from 'react';
-import { DATA_MESSAGE_LIFETIME_MS, DATA_MESSAGE_TOPIC } from '../../constants';
+import React, {
+  useEffect,
+  useReducer,
+  createContext,
+  useContext,
+  FC,
+  useCallback,
+} from 'react';
 import { useAppState } from '../AppStateProvider';
-import { DataMessagesActionType, initialState, ChatDataMessage, reducer } from './state';
+import {
+  DataMessagesActionType,
+  initialState,
+  ChatDataMessage,
+  reducer,
+} from './state';
 
 interface DataMessagesStateContextType {
   sendMessage: (message: string) => void;
   messages: ChatDataMessage[];
 }
 
-const DataMessagesStateContext = createContext<DataMessagesStateContextType | undefined>(undefined);
+const DataMessagesStateContext = createContext<
+  DataMessagesStateContextType | undefined
+>(undefined);
 
 export const DataMessagesProvider: FC = ({ children }) => {
   const { localUserName } = useAppState();
@@ -22,9 +38,14 @@ export const DataMessagesProvider: FC = ({ children }) => {
     if (!audioVideo) {
       return;
     }
-    audioVideo.realtimeSubscribeToReceiveDataMessage(DATA_MESSAGE_TOPIC, handler);
+    audioVideo.realtimeSubscribeToReceiveDataMessage(
+      'ChimeComponentLibraryDataMessage',
+      handler
+    );
     return () => {
-      audioVideo.realtimeUnsubscribeFromReceiveDataMessage(DATA_MESSAGE_TOPIC);
+      audioVideo.realtimeUnsubscribeFromReceiveDataMessage(
+        'ChimeComponentLibraryDataMessage'
+      );
     };
   }, [audioVideo]);
 
@@ -32,7 +53,8 @@ export const DataMessagesProvider: FC = ({ children }) => {
     (dataMessage: DataMessage) => {
       if (!dataMessage.throttled) {
         const isSelf =
-          dataMessage.senderAttendeeId === meetingManager.meetingSession?.configuration.credentials?.attendeeId;
+          dataMessage.senderAttendeeId ===
+          meetingManager.meetingSession?.configuration.credentials?.attendeeId;
         if (isSelf) {
           dispatch({
             type: DataMessagesActionType.ADD,
@@ -76,12 +98,17 @@ export const DataMessagesProvider: FC = ({ children }) => {
         return;
       }
       const payload = { message, senderName: localUserName };
-      const senderAttendeeId = meetingManager.meetingSession.configuration.credentials.attendeeId;
-      audioVideo.realtimeSendDataMessage(DATA_MESSAGE_TOPIC, payload, DATA_MESSAGE_LIFETIME_MS);
+      const senderAttendeeId =
+        meetingManager.meetingSession.configuration.credentials.attendeeId;
+      audioVideo.realtimeSendDataMessage(
+        'ChimeComponentLibraryDataMessage',
+        payload,
+        300000
+      );
       handler(
         new DataMessage(
           Date.now(),
-          DATA_MESSAGE_TOPIC,
+          'ChimeComponentLibraryDataMessage',
           new TextEncoder().encode(message),
           senderAttendeeId,
           localUserName
@@ -95,7 +122,11 @@ export const DataMessagesProvider: FC = ({ children }) => {
     sendMessage,
     messages: state.messages,
   };
-  return <DataMessagesStateContext.Provider value={value}>{children}</DataMessagesStateContext.Provider>;
+  return (
+    <DataMessagesStateContext.Provider value={value}>
+      {children}
+    </DataMessagesStateContext.Provider>
+  );
 };
 
 export const useDataMessages = (): {

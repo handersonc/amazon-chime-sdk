@@ -27,7 +27,7 @@ const EndMeetingControl: React.FC = () => {
   const history = useHistory();
 
   const leaveMeeting = async (): Promise<void> => {
-    history.push(routes.HOME);
+    history.push(routes.DASHBOARD);
   };
 
   const endMeetingForAll = async (): Promise<void> => {
@@ -55,18 +55,18 @@ const EndMeetingControl: React.FC = () => {
           </ModalBody>
           <ModalButtonGroup
             primaryButtons={[
-              <ModalButton
-                key="end-meeting-for-all"
-                onClick={endMeetingForAll}
-                variant="primary"
-                label="End meeting for all"
-                closesModal
-              />,
+              // <ModalButton
+              //   key="end-meeting-for-all"
+              //   onClick={endMeetingForAll}
+              //   variant="primary"
+              //   label="End meeting for all"
+              //   closesModal
+              // />,
               <ModalButton
                 key="leave-meeting"
                 onClick={leaveMeeting}
                 variant="primary"
-                label="Leave Meeting"
+                label="Go to dashboard"
                 closesModal
               />,
               <ModalButton key="cancel-meeting-ending" variant="secondary" label="Cancel" closesModal />,

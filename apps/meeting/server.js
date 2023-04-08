@@ -12,8 +12,18 @@ const AWS = require('aws-sdk');
 let hostname = '127.0.0.1';
 let port = 8080;
 let protocol = 'http';
-let options = {};
+let options = {
 
+};
+
+AWS.config.update(
+  {
+    accessKeyId: 'ASIATCNAXVS7E5WDEJGI', 
+    secretAccessKey:'U9sxg0jMRJe1W3J9BsqkkLWOFSlPgsUWq9J9c7Ot',
+    sessionToken: 'IQoJb3JpZ2luX2VjEB0aCXVzLWVhc3QtMSJIMEYCIQD+89hpS60r4kcpf+qmhDEla1LfGR27gljTiQJmG79kawIhANu4QH1IuTKN/orm4ndX7/TcEDNURriHtd+zT8kY7tXzKpkDCPb//////////wEQAhoMMjExMzI3MzY0Mjg2IgwHlFltwyAz1XwCczUq7QKrajVzlbDh4cDklNs8lJ+CQvKvbc3HftzGNe8ozk7S/cmklxcEco0HnaoaoiuJ08o7d7LBFMG1i3DiuoUsEZfcIEjuVGqxlTGN3DPfuhmOcqh5apqQqVRujuULXVNFbm21spE9qlLHEJfoWiz3Sx0XDIWS10+gSZuO3YBx3ku0dalxF3bVA/n70E+4YUnCgKARJC60DVIbo6zcF8tIEei/LY9+WxGUJRhr1WJ61LCYNjv0PV0Y0R+CSjNN4u9tveibRI3dmIl67p19cn2Cpeyatq5+9dorwKgtZ10CASHvToHTOZUZjbGxxkntj+2+nIPpSguGdpzkE9sin5WHbZi7vMhW/DNJX+A/kAFj/KcUQT/ovsYe0lNWJ8Wpon3EfRqQmKAjFEZvsiStJE632BH5dskyxE2b9znUNssKsaYZCbxXeY3k5pjw5mKFg0puH8OVJGET3o6ZtsL6PSTx49+AiClMBgjVnik3mNrdUDDmlrKhBjqlAfBuYnhC9z/fAM0c3hBqcHMblnUKj2WgUTFufTV6dfLbHY77r2Y1jhmb0BJYaGHPi1rrI20zffpYnLh61kRBXKzt+s+OnZOpSXCeaIP4LCUNEu/H4ZQXXE8+kxTCwF+t0SxsK/0IilMaOK2yKaxJONoCR0BEqWZxn9ZBE/bTjCnmZj15Yb60BfL+BXfNLD0hPvfyJJzinfoddjGwr3qXRNObvurk7A==',
+    region: 'us-east-1'
+  }
+)
 const chime = new AWS.Chime({ region: 'us-east-1' });
 const alternateEndpoint = process.env.ENDPOINT;
 
@@ -55,13 +65,20 @@ const log = message => {
   console.log(`${new Date().toISOString()} ${message}`);
 };
 
+
+
 const app = process.env.npm_config_app || 'meeting';
+
 
 const server = require(protocol).createServer(
   options,
   async (request, response) => {
     log(`${request.method} ${request.url} BEGIN`);
     compression({})(request, response, () => {});
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
     try {
       if (
         request.method === 'POST' &&

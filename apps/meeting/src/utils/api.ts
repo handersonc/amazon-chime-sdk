@@ -1,9 +1,9 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import routes from '../constants/routes';
+ 
 
-export const BASE_URL = routes.HOME;
+export const BASE_URL = 'http://localhost:8080/';
 
 export type MeetingFeatures = {
   Audio: {[key: string]: string};

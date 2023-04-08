@@ -49,13 +49,13 @@ const MeetingStatusNotifier: React.FC = () => {
           });
         }
         break;
-      case MeetingStatus.Reconnecting:
-        setStatus('reconnecting');
-        dispatch({
-          type: ActionType.ADD,
-          payload: getMeetingStatusPayload('Meeting reconnecting...', Severity.WARNING),
-        });
-        break;
+      // case MeetingStatus.Reconnecting:
+      //   setStatus('reconnecting');
+      //   dispatch({
+      //     type: ActionType.ADD,
+      //     payload: getMeetingStatusPayload('Meeting reconnecting...', Severity.WARNING),
+      //   });
+      //   break;
       case MeetingStatus.Failed:
         setStatus('failed');
         dispatch({
